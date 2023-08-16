@@ -21,6 +21,14 @@ func FilterStruct(target interface{}) (res string) {
 			key = tag
 		}
 
+		if values.Field(i).Kind() == reflect.Interface {
+			if inter := FilterInterface(values.Field(i)); inter != value {
+				line := fmt.Sprintf("%v: %v", key, inter)
+				lines = append(lines, line)
+				continue
+			}
+		}
+
 		if values.Field(i).Kind() == reflect.Ptr {
 			if ptr := FilterPointer(values.Field(i).Interface()); ptr != value {
 				line := fmt.Sprintf("%v: %v", key, ptr)

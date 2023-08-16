@@ -1,6 +1,8 @@
 package ts
 
-import "reflect"
+import (
+	"reflect"
+)
 
 func FilterPointer(target interface{}) (res string) {
 	res = "unknown"
@@ -15,6 +17,20 @@ func FilterPointer(target interface{}) (res string) {
 	if ntypes.Kind() == reflect.Slice {
 		if slice := FilterSlice(ntypes.Interface()); slice != res {
 			res = slice + " | undefined"
+			return
+		}
+	}
+
+	if ntypes.Kind() == reflect.Map {
+		if m := FilterMap(ntypes.Interface()); m != res {
+			res = m + " | undefined"
+			return
+		}
+	}
+
+	if ntypes.Kind() == reflect.Ptr {
+		if ptr := FilterPointer(ntypes.Interface()); ptr != res {
+			res = ptr + " | undefined"
 			return
 		}
 	}

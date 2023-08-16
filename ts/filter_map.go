@@ -27,6 +27,11 @@ func FilterMap(target interface{}) (res string) {
 		}
 	}
 
+	// if slice := FilterSlice(reflect.Indirect(reflect.New(value)).Interface()); slice != res {
+	// 	res = slice
+	// 	return
+	// }
+
 	if prim := FilterPrimitive(reflect.Indirect(reflect.New(value)).Interface()); prim != res {
 		res = fmt.Sprintf("{ [key: %v]: %v }", keyAs, prim)
 		return

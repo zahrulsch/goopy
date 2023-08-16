@@ -7,6 +7,11 @@ import (
 )
 
 func GenTS(target interface{}) (res string) {
+	if reflect.ValueOf(target).Kind() == reflect.Invalid {
+		res = "null"
+		return
+	}
+
 	types := reflect.TypeOf(target)
 	typesKind := types.Kind()
 	res = "unknown"
