@@ -71,4 +71,18 @@ func TestGenTS4(t *testing.T) {
 
 		assert.Equal(t, expect, res)
 	})
+
+	t.Run("test againts slice of struct pointer", func(t *testing.T) {
+		var address []*Address
+		res := goopy.GenTS(address)
+		expect := "Array<{ city: string; pos_code: number } | undefined>"
+
+		assert.Equal(t, expect, res)
+
+		var persons []*Person
+		res = goopy.GenTS(persons)
+		expect = "Array<{ id: number; name: string; address: { city: string; pos_code: number } | undefined } | undefined>"
+
+		assert.Equal(t, expect, res)
+	})
 }

@@ -31,6 +31,11 @@ func GenTS(target interface{}) (res string) {
 		return
 	}
 
+	if typesKind == reflect.Map {
+		res = ts.FilterMap(target)
+		return
+	}
+
 	return
 }
 
