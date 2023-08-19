@@ -20,11 +20,11 @@ type Person struct {
 
 func TestGenTS3(t *testing.T) {
 	var target Person
-	res := goopy.GenTS(target)
-	expect := `{ id: number; name: string; address: { city: string; pos_code: number } | undefined }`
+	res := escapeChar(goopy.GenTS(target, 4))
+	expect := escapeChar(`{ id: number; name: string; address?: { city: string; pos_code: number } }`)
 	assert.Equal(t, expect, res)
 
-	res = goopy.GenTS(&target)
-	expect = `{ id: number; name: string; address: { city: string; pos_code: number } | undefined } | undefined`
+	res = escapeChar(goopy.GenTS(&target, 4))
+	expect = escapeChar(`{ id: number; name: string; address?: { city: string; pos_code: number } } | undefined`)
 	assert.Equal(t, expect, res)
 }

@@ -60,26 +60,26 @@ func TestGenTS1(t *testing.T) {
 	for _, tc := range tcs {
 		testName := fmt.Sprintf("test againts value concrete %T", tc.T)
 		t.Run(testName, func(t *testing.T) {
-			res := goopy.GenTS(tc.T)
+			res := goopy.GenTS(tc.T, 2)
 			assert.Equal(t, tc.Expect, res)
 		})
 	}
 
 	t.Run("test againts pointer string", func(t *testing.T) {
 		var tar *string
-		res := goopy.GenTS(tar)
+		res := goopy.GenTS(tar, 2)
 		assert.Equal(t, "string | undefined", res)
 	})
 
 	t.Run("test againts pointer int", func(t *testing.T) {
 		var tar *int
-		res := goopy.GenTS(tar)
+		res := goopy.GenTS(tar, 2)
 		assert.Equal(t, "number | undefined", res)
 	})
 
 	t.Run("test againts pointer bool", func(t *testing.T) {
 		var tar *bool
-		res := goopy.GenTS(tar)
+		res := goopy.GenTS(tar, 2)
 		assert.Equal(t, "boolean | undefined", res)
 	})
 }

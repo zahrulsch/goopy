@@ -1,46 +1,7 @@
 package goopy
 
-import (
-	"reflect"
-
-	"github.com/zahrulsch/goopy/ts"
-)
-
-func GenTS(target interface{}) (res string) {
-	if reflect.ValueOf(target).Kind() == reflect.Invalid {
-		res = "null"
-		return
-	}
-
-	types := reflect.TypeOf(target)
-	typesKind := types.Kind()
-	res = "unknown"
-
-	if prim := ts.FilterPrimitive(target); prim != "unknown" {
-		res = prim
-		return
-	}
-
-	if typesKind == reflect.Ptr {
-		res = ts.FilterPointer(target)
-		return
-	}
-
-	if typesKind == reflect.Struct {
-		res = ts.FilterStruct(target)
-		return
-	}
-
-	if typesKind == reflect.Slice {
-		res = ts.FilterSlice(target)
-		return
-	}
-
-	if typesKind == reflect.Map {
-		res = ts.FilterMap(target)
-		return
-	}
-
+func GenTS(target interface{}, indent int) (res string) {
+	res = gen_ts(target, indent, indent)
 	return
 }
 

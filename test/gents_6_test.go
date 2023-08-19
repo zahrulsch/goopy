@@ -32,7 +32,7 @@ func TestGenTS6(t *testing.T) {
 		},
 		{
 			T:      I{Key: &Address{}},
-			Expect: "{ key: { city: string; pos_code: number } | undefined }",
+			Expect: "{ key?: { city: string; pos_code: number } }",
 		},
 		{
 			T:      I{Key: []string{}},
@@ -52,27 +52,35 @@ func TestGenTS6(t *testing.T) {
 		},
 		{
 			T:      I{Key: map[string]string{}},
-			Expect: "{ key: { [key: string]: string } }",
+			Expect: "{ key: Record<string, string> }",
 		},
 		{
 			T:      I{Key: map[int]string{}},
-			Expect: "{ key: { [key: number]: string } }",
+			Expect: "{ key: Record<number, string> } ",
 		},
 		{
 			T:      I{Key: map[int]*string{}},
-			Expect: "{ key: { [key: number]: string | undefined } }",
+			Expect: "{ key: Record<number, string|undefined>} ",
 		},
 		{
 			T:      I{Key: map[int][]string{}},
-			Expect: "{ key: { [key: number]: Array<string> } }",
+			Expect: "{ key: Record<number, Array<string>> }",
 		},
 	}
 
 	for _, tc := range tcs {
 		testName := fmt.Sprintf("test againts %#v", tc.T)
 		t.Run(testName, func(t *testing.T) {
-			res := goopy.GenTS(tc.T)
-			assert.Equal(t, tc.Expect, res)
+			res := escapeChar(goopy.GenTS(tc.T, 4))
+			assert.Equal(t, escapeChar(tc.Expect), res)
 		})
 	}
+
+	// tc := I{Key: Address{}}
+	// // tc := I{Key: &map[string]string{}}
+	// t.Run("test 6", func(t *testing.T) {
+	// 	res := escapeChar(goopy.GenTS(tc, 4))
+	// 	fmt.Println(res)
+	// 	// assert.Equal(t, escapeChar(tc.Expect), res)
+	// })
 }

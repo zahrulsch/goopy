@@ -22,15 +22,15 @@ func TestGenTS2(t *testing.T) {
 	var tcs TcStruct
 
 	t.Run("test againts struct", func(t *testing.T) {
-		res := goopy.GenTS(tcs)
-		expect := "{ name: string; age: number; description: { address: string } }"
+		res := escapeChar(goopy.GenTS(tcs, 4))
+		expect := escapeChar("{ name: string; age: number; description: { address: string } }")
 
 		assert.Equal(t, expect, res)
 	})
 
 	t.Run("test againts struct pointer", func(t *testing.T) {
-		res := goopy.GenTS(&tcs)
-		expect := "{ name: string; age: number; description: { address: string } } | undefined"
+		res := escapeChar(goopy.GenTS(&tcs, 4))
+		expect := escapeChar("{ name: string; age: number; description: { address: string } } | undefined")
 
 		assert.Equal(t, expect, res)
 	})
